@@ -1,6 +1,6 @@
 # Big Data Projects Repository
 
-Welcome to the Big Data Projects repository! This repository contains various projects related to big data processing, analysis, and management.
+This repository contains various projects related to big data processing, analysis, and management.
 
 ## Overview
 
