@@ -14,3 +14,6 @@ To run the project:
 4. Run `main.py` to execute the project. -->
 
 ## Contributors
+
+- Anup Thapa
+- Derek Zhou
