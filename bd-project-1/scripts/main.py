@@ -24,7 +24,11 @@ def main():
     # Print the counts for each year
     DataProcessor.count_inspections_by_year(inspections_data)
 
-    
+    # Prompt the user for a business name
+    business_name = input("Enter the name of the business: ")
+
+    # Search for the business violation
+    result = DataProcessor.find_business_violation(business_name, inspections_data)
     # Close the database connection
     db_operations.close_connection()
     

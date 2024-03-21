@@ -21,6 +21,7 @@ class DataProcessor:
                     continue
         
         return data # Returning the list of JSON data without "_id" as "$oid"
+    
     @staticmethod
     def count_inspections_by_year(inspections_data):
         year_counts = {}  # Dictionary to store counts for each year dynamically
@@ -37,3 +38,17 @@ class DataProcessor:
             print(f"Number of Inspections in {year}: {count}")
 
         print("Year Counts:", year_counts)
+        
+    @staticmethod
+    def find_business_violation(business_name, inspections_data):
+        result = None
+        for inspection in inspections_data:
+            if "business_name" in inspection and inspection["business_name"] == business_name:
+                result = inspection["result"]
+                break
+
+        # Print the result or "Business Not found"
+        if result is not None:
+            print(f"Result for '{business_name}': {result}")
+        else:
+            print("Business Not found.")
