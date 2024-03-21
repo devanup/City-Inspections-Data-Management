@@ -21,3 +21,19 @@ class DataProcessor:
                     continue
         
         return data # Returning the list of JSON data without "_id" as "$oid"
+    @staticmethod
+    def count_inspections_by_year(inspections_data):
+        year_counts = {}  # Dictionary to store counts for each year dynamically
+
+        for inspection in inspections_data:
+            if "date" in inspection:
+                # Extract the year from the date string
+                year = int(inspection["date"].split()[-1])
+                # Increment count for the respective year
+                year_counts[year] = year_counts.get(year, 0) + 1
+
+        # Print the year_counts and count for each year
+        for year, count in year_counts.items():
+            print(f"Number of Inspections in {year}: {count}")
+
+        print("Year Counts:", year_counts)

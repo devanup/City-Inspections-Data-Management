@@ -10,7 +10,7 @@ def main():
     db_operations = DBOperations(db_connection.db)
 
     # Load JSON data from a file
-    inspections_data = DataProcessor.load_json_data("../data/city_inspections.json")
+    inspections_data = DataProcessor.load_json_data("../data/test.json")
 
     # Initialize database operations
 
@@ -19,9 +19,11 @@ def main():
     
     # Loop through each data point and insert into the collection
     for data_point in inspections_data:
-        # Insert each document individually
+    # Insert each document individually
         inserted_id = db_operations.insert_document(data_point)
-  
+    # Print the counts for each year
+    DataProcessor.count_inspections_by_year(inspections_data)
+
     
     # Close the database connection
     db_operations.close_connection()
