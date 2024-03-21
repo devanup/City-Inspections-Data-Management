@@ -10,3 +10,5 @@ class DBConnection:
         connection_string = f"mongodb+srv://anupthedev:{password}@bigdata-project1.3h2wcf2.mongodb.net/" # Get MongoDB connection string from environment variables
         self.client = MongoClient(connection_string) # Connect to MongoDB
         self.db = self.client["Project01"] # Access the database
+# mongodb+srv://anupthedev:bdc-p1@bigdata-project1.3h2wcf2.mongodb.net/
+# mongodb+srv://derek:bdc-p1@bigdata-project1.3h2wcf2.mongodb.net/
