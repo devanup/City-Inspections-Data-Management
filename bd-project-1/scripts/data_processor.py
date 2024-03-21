@@ -1,4 +1,3 @@
-# This file is a class that contains a method to load JSON data from a file.
 import json
 import os
 
@@ -12,9 +11,13 @@ class DataProcessor:
         with open(file_path, 'r') as file:
             for line in file:
                 try:
-                    data.append(json.loads(line)) # Parsing the JSON data and appending it to the list
+                    json_data = json.loads(line)
+                    if "_id" in json_data and isinstance(json_data["_id"], dict) and "$oid" in json_data["_id"]:
+                        # Ignore entries with "_id" as "$oid"
+                        del json_data["_id"]
+                    data.append(json_data) # Appending data without "_id" as "$oid" to the list
                 except json.JSONDecodeError as e:
                     print(f"Error decoding JSON: {e}")
                     continue
         
-        return data # Returning the list of JSON data
+        return data # Returning the list of JSON data without "_id" as "$oid"

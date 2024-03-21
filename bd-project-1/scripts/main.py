@@ -11,14 +11,20 @@ def main():
 
     # Load JSON data from a file
     inspections_data = DataProcessor.load_json_data("../data/city_inspections.json")
-    # Print first record
-    print(inspections_data[0])
-    
+
     # Initialize database operations
 
-    # Load JSON data from file
-    
     # Perform data operations
-
+    # Insert documents into the collection
+    
+    # Loop through each data point and insert into the collection
+    for data_point in inspections_data:
+        # Insert each document individually
+        inserted_id = db_operations.insert_document(data_point)
+  
+    
+    # Close the database connection
+    db_operations.close_connection()
+    
 if __name__ == "__main__":
     main()
