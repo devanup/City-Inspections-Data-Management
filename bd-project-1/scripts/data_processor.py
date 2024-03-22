@@ -58,8 +58,8 @@ class DataProcessor:
     
     @staticmethod
     def count_and_print_borough_violations(inspections_data):
-        count_brooklyn = 0
-        count_bronx = 0
+        violation_brooklyn = 0
+        violation_bronx = 0
         brooklyn_businesses = []
         bronx_businesses = []
 
@@ -69,26 +69,28 @@ class DataProcessor:
                 city = address.get("city", "").upper()
 
                 if city == "BROOKLYN":
-                    count_brooklyn += 1
+                    if inspection["result"] == "Violation Issued":
+                        violation_brooklyn += 1
                     if len(brooklyn_businesses) < 5:
                         brooklyn_businesses.append({
                             "business_name": inspection.get("business_name", ""),
                             "address": address
                         })
                 elif city == "BRONX":
-                    count_bronx += 1
+                    if inspection["result"] == "Violation Issued":
+                        violation_bronx += 1
                     if len(bronx_businesses) < 5:
                         bronx_businesses.append({
                             "business_name": inspection.get("business_name", ""),
                             "address": address
                         })
 
-        print("Business Violations in Brooklyn:")
+        print("First Five Businesses in Brooklyn:")
         for business in brooklyn_businesses:
             print(f"Name: {business['business_name']}")
             print(f"Address: {business['address']} \n")
 
-        print("Business Violations in Bronx:")
+        print("First Five Businesses in Bronx:")
         for business in bronx_businesses:
             print(f"Name: {business['business_name']}")
             print(f"Address: {business['address']} \n")
