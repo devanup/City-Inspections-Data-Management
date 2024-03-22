@@ -44,6 +44,7 @@ class DataProcessor:
     @staticmethod
     def find_business_violation(business_name, inspections_data):
         result = None
+        #Search for business_name
         for inspection in inspections_data:
             if "business_name" in inspection and inspection["business_name"] == business_name:
                 result = inspection["result"]
@@ -103,6 +104,7 @@ class DataProcessor:
     @staticmethod
     def search_businesses_by_zip(zip_code, inspections_data):
         matching_businesses = []
+        #Search for Zip-code
         for inspection in inspections_data:
             address = inspection.get("address", {})
             if "zip" in address and address["zip"] == zip_code:
@@ -111,8 +113,9 @@ class DataProcessor:
         if matching_businesses:
             print(f"Total number of businesses in zip code {zip_code}: {len(matching_businesses)}")
 
-            # Randomly select 5 businesses
-            selected_businesses = random.sample(matching_businesses, min(5, len(matching_businesses)))
+            # Randomly select 5 or less businesses
+            min_businesses = min(5, len(matching_businesses))
+            selected_businesses = random.sample(matching_businesses, min_businesses)
 
             print("Randomly selected businesses:")
             for business in selected_businesses:
