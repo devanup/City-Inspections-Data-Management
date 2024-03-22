@@ -1,6 +1,6 @@
 import json
 import os
-
+import random
 class DataProcessor:
     @staticmethod
     def load_json_data(file_name):
@@ -52,3 +52,69 @@ class DataProcessor:
             print(f"Result for '{business_name}': {result}")
         else:
             print("Business Not found.")
+    
+    @staticmethod
+    def count_and_print_borough_violations(inspections_data):
+        count_brooklyn = 0
+        count_bronx = 0
+        brooklyn_businesses = []
+        bronx_businesses = []
+
+        for inspection in inspections_data:
+            if "address" in inspection:
+                address = inspection["address"]
+                city = address.get("city", "").upper()
+
+                if city == "BROOKLYN":
+                    count_brooklyn += 1
+                    if len(brooklyn_businesses) < 5:
+                        brooklyn_businesses.append({
+                            "business_name": inspection.get("business_name", ""),
+                            "address": address
+                        })
+                elif city == "BRONX":
+                    count_bronx += 1
+                    if len(bronx_businesses) < 5:
+                        bronx_businesses.append({
+                            "business_name": inspection.get("business_name", ""),
+                            "address": address
+                        })
+
+        print("Business Violations in Brooklyn:")
+        for business in brooklyn_businesses:
+            print(f"Name: {business['business_name']}")
+            print(f"Address: {business['address']}")
+            print()
+
+        print("Business Violations in Bronx:")
+        for business in bronx_businesses:
+            print(f"Name: {business['business_name']}")
+            print(f"Address: {business['address']}")
+            print()
+
+        print("Total Violations in Brooklyn:", count_brooklyn)
+        print("Total Violations in Bronx:", count_bronx)
+
+        difference = abs(count_brooklyn - count_bronx)
+        print("Difference in Violations Count:", difference)
+        
+    
+    @staticmethod
+    def search_businesses_by_zip(zip_code, inspections_data):
+        matching_businesses = []
+        for inspection in inspections_data:
+            address = inspection.get("address", {})
+            if "zip" in address and address["zip"] == zip_code:
+                matching_businesses.append(inspection["business_name"])
+        
+        if matching_businesses:
+            print(f"Total number of businesses in zip code {zip_code}: {len(matching_businesses)}")
+
+            # Randomly select 5 businesses
+            selected_businesses = random.sample(matching_businesses, min(5, len(matching_businesses)))
+
+            print("Randomly selected businesses:")
+            for business in selected_businesses:
+                print(business)
+        else:
+            print("Zip-code Not found.")

@@ -25,10 +25,17 @@ def main():
     DataProcessor.count_inspections_by_year(inspections_data)
 
     # Prompt the user for a business name
-    business_name = input("Enter the name of the business: ")
+    business_name = input("Enter the name of the business: ").upper()
 
     # Search for the business violation
-    result = DataProcessor.find_business_violation(business_name, inspections_data)
+    DataProcessor.find_business_violation(business_name, inspections_data)
+    
+    #print violations for Brooklyn, Bronx and difference
+    DataProcessor.count_and_print_borough_violations(inspections_data)
+    
+    #Find 5 random businesses
+    
+    
     # Close the database connection
     db_operations.close_connection()
     
