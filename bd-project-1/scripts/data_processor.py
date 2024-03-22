@@ -96,10 +96,10 @@ class DataProcessor:
             print(f"Address: {business['address']} \n")
 
 
-        print("Total Violations in Brooklyn:", count_brooklyn)
-        print("Total Violations in Bronx:", count_bronx)
+        print("Total Violations in Brooklyn:", violation_brooklyn)
+        print("Total Violations in Bronx:", violation_bronx)
 
-        difference = abs(count_brooklyn - count_bronx)
+        difference = abs(violation_brooklyn - violation_bronx)
         print("Difference in Violations Count:", difference)
         
     
