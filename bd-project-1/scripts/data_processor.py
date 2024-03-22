@@ -38,6 +38,8 @@ class DataProcessor:
             print(f"Number of Inspections in {year}: {count}")
 
         print("Year Counts:", year_counts)
+        print()
+
         
     @staticmethod
     def find_business_violation(business_name, inspections_data):
@@ -49,9 +51,9 @@ class DataProcessor:
 
         # Print the result or "Business Not found"
         if result is not None:
-            print(f"Result for '{business_name}': {result}")
+            print(f"Result for '{business_name}': {result} \n")
         else:
-            print("Business Not found.")
+            print("Business Not found. \n")
     
     @staticmethod
     def count_and_print_borough_violations(inspections_data):
@@ -83,14 +85,13 @@ class DataProcessor:
         print("Business Violations in Brooklyn:")
         for business in brooklyn_businesses:
             print(f"Name: {business['business_name']}")
-            print(f"Address: {business['address']}")
-            print()
+            print(f"Address: {business['address']} \n")
 
         print("Business Violations in Bronx:")
         for business in bronx_businesses:
             print(f"Name: {business['business_name']}")
-            print(f"Address: {business['address']}")
-            print()
+            print(f"Address: {business['address']} \n")
+
 
         print("Total Violations in Brooklyn:", count_brooklyn)
         print("Total Violations in Bronx:", count_bronx)

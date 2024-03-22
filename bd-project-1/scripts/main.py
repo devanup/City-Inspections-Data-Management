@@ -14,27 +14,26 @@ def main():
 
     # Initialize database operations
 
-    # Perform data operations
+
     # Insert documents into the collection
-    
-    # Loop through each data point and insert into the collection
     for data_point in inspections_data:
-    # Insert each document individually
         inserted_id = db_operations.insert_document(data_point)
+        
     # Print the counts for each year
     DataProcessor.count_inspections_by_year(inspections_data)
 
-    # Prompt the user for a business name
+    # Ask the user for a business name
     business_name = input("Enter the name of the business: ").upper()
 
-    # Search for the business violation
+    # # Search for the business violation
     DataProcessor.find_business_violation(business_name, inspections_data)
     
     #print violations for Brooklyn, Bronx and difference
     DataProcessor.count_and_print_borough_violations(inspections_data)
     
     #Find 5 random businesses
-    
+    zip_code = int(input("Enter a zip code to find 5 businesses in the area: "))
+    DataProcessor.search_businesses_by_zip(zip_code, inspections_data)
     
     # Close the database connection
     db_operations.close_connection()
