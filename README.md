@@ -1,4 +1,4 @@
-# Big Data Projects Repository
+# Big Data Technology
 
 This repository contains various projects related to big data processing, analysis, and management.
 

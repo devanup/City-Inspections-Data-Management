@@ -55,6 +55,7 @@ class DataProcessor:
         else:
             print("Business Not found. \n")
 
+
     @staticmethod
     def count_violations_by_borough(db_operations, borough):
         # Construct query to match documents with the given borough
