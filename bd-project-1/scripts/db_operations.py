@@ -1,7 +1,7 @@
 # This file contains a class for performing various operations on a MongoDB database collection.
-
 import pprint
 from bson import ObjectId
+
 class DBOperations:
     def __init__(self, db):
         self.collection = db.project_1_collections
@@ -29,7 +29,6 @@ class DBOperations:
     # DELETE all documents
     def delete_all_documents(self):
         result = self.collection.delete_many({})
-
         if result.deleted_count == 0:
             print("No documents to delete.")
         else:
@@ -50,25 +49,16 @@ class DBOperations:
             print(f"An error occurred: {e}")
             return []  # Return an empty list in case of an error  
 
-        return result.deleted_count
-
-    # FIND document
-    def find_document(self, query):
-        result = self.collection.find_one(query)
-        return result
-
     # UPDATE document
     def update_document(self, document_id, update_data):
         result = self.collection.update_one(
             {"_id": document_id},
             {"$set": update_data}
         )
-
         if result.modified_count == 1:
             print("Document updated successfully.")
         else:
             print("Document not found or could not be updated.")
-
         return result.modified_count > 0
 
     # COUNT documents
