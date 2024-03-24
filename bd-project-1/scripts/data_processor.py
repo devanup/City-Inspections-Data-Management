@@ -39,7 +39,6 @@ class DataProcessor:
 
         print("Year Counts:", year_counts)
         print()
-
         
     @staticmethod
     def find_business_violation(business_name, inspections_data):
@@ -55,72 +54,95 @@ class DataProcessor:
             print(f"Result for '{business_name}': {result} \n")
         else:
             print("Business Not found. \n")
-    
+
+
     @staticmethod
-    def count_and_print_borough_violations(inspections_data):
-        violation_brooklyn = 0
-        violation_bronx = 0
-        brooklyn_businesses = []
-        bronx_businesses = []
-
-        for inspection in inspections_data:
-            if "address" in inspection:
-                address = inspection["address"]
-                city = address.get("city", "").upper()
-
-                if city == "BROOKLYN":
-                    if inspection["result"] == "Violation Issued":
-                        violation_brooklyn += 1
-                    if len(brooklyn_businesses) < 5:
-                        brooklyn_businesses.append({
-                            "business_name": inspection.get("business_name", ""),
-                            "address": address
-                        })
-                elif city == "BRONX":
-                    if inspection["result"] == "Violation Issued":
-                        violation_bronx += 1
-                    if len(bronx_businesses) < 5:
-                        bronx_businesses.append({
-                            "business_name": inspection.get("business_name", ""),
-                            "address": address
-                        })
-
-        print("First Five Businesses in Brooklyn:")
-        for business in brooklyn_businesses:
-            print(f"Name: {business['business_name']}")
-            print(f"Address: {business['address']} \n")
-
-        print("First Five Businesses in Bronx:")
-        for business in bronx_businesses:
-            print(f"Name: {business['business_name']}")
-            print(f"Address: {business['address']} \n")
-
-
-        print("Total Violations in Brooklyn:", violation_brooklyn)
-        print("Total Violations in Bronx:", violation_bronx)
-
-        difference = abs(violation_brooklyn - violation_bronx)
-        print("Difference in Violations Count:", difference)
+    def count_violations_by_borough(db_operations, borough):
+        # Construct query to match documents with the given borough
+        query = {"address.city": borough}
         
-    
+        # Find documents matching the query
+        documents = db_operations.find_document(query)
+        
+        # Initialize variables to count violations
+        violation_count = 0
+
+        # Initialize lists to store businesses
+        businesses = []
+
+        # Iterate through documents to count violations and collect business information
+        for doc in documents:
+            if doc["result"] == "Violation Issued":
+                violation_count += 1
+            
+            # Append business information to the list
+            businesses.append({
+                "business_name": doc.get("business_name", ""),
+                "address": doc.get("address", {})
+            })
+
+        
+        return violation_count
+
     @staticmethod
-    def search_businesses_by_zip(zip_code, inspections_data):
-        matching_businesses = []
-        #Search for Zip-code
-        for inspection in inspections_data:
-            address = inspection.get("address", {})
-            if "zip" in address and address["zip"] == zip_code:
-                matching_businesses.append(inspection["business_name"])
+    def print_businesses_by_borough(db_operations, borough, limit=5):
+        # Construct query to match documents with the given borough
+        query = {"address.city": borough}
         
-        if matching_businesses:
-            print(f"Total number of businesses in zip code {zip_code}: {len(matching_businesses)}")
+        # Find documents matching the query
+        documents = db_operations.find_document(query)
+        
+        # Print the names and addresses of the first five businesses in the borough
+        print(f"\nFirst {limit} businesses located in {borough}:")
+        for i, business in enumerate(documents[:limit]):
+            print(f"{i+1}. Name: {business['business_name']}, Address: {business['address']['number']} {business['address']['street']}, {borough}, {business['address']['zip']}")
 
-            # Randomly select 5 or less businesses
-            min_businesses = min(5, len(matching_businesses))
-            selected_businesses = random.sample(matching_businesses, min_businesses)
+    @staticmethod
+    def print_random_businesses(documents):
+        # Randomly select five businesses from the list
+        random_businesses = random.sample(documents, min(5, len(documents)))
+        
+        # Print the names of the randomly selected businesses
+        print("\nRandomly selected businesses:")
+        for i, business in enumerate(random_businesses, start=1):
+            print(f"{i}. {business['business_name']}")
 
-            print("Randomly selected businesses:")
-            for business in selected_businesses:
-                print(business)
-        else:
-            print("Zip-code Not found.")
+    @staticmethod
+    def businesses_in_zip_code(db_operations, zip_code):
+        # Construct query to match documents with the given zip code
+        query = {"address.zip": zip_code}
+        
+        # Find documents matching the query
+        documents = db_operations.find_document(query)
+        
+        # Count the total number of businesses in the zip code
+        total_businesses = len(documents)
+        
+        return documents, total_businesses
+
+    @staticmethod
+    def find_businesses_in_zip_code(db_operations):
+        # Prompt the user to input a zip code
+        zip_code = input("\nEnter a zip code: ")
+        
+        # Check if the zip code is valid
+        if not zip_code.isdigit():
+            print("Invalid zip code. Please enter a numeric zip code.")
+            return
+        
+        # Convert zip code to integer
+        zip_code = int(zip_code)
+        
+        # Get the businesses in the specified zip code
+        documents, total_businesses = DataProcessor.businesses_in_zip_code(db_operations, zip_code)
+        
+        # Check if any businesses were found in the zip code
+        if total_businesses == 0:
+            print("Zip code not found.")
+            return
+
+        # Print the total number of businesses in the zip code
+        print(f"Total number of businesses in zip code {zip_code}: {total_businesses}")
+        
+        # Print the names of randomly selected businesses
+        DataProcessor.print_random_businesses(documents)
