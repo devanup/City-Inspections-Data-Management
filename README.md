@@ -1,21 +1,24 @@
-### Project: City Inspections Data Management
+Project Overview
+----------------
 
-#### Overview
 This project manages city inspection data using MongoDB. It involves reading data from a JSON file containing city inspections data, storing this data in a MongoDB database, and performing various operations on the data.
 
-#### Features
+Key Features
+------------
+
 - Load JSON data into MongoDB
 - Query and analyze city inspections data
 - Handle user inputs for business and zip-code searches
 - Generate random selections of businesses
 
-#### Contributors
+Contributors
+------------
+
 - Anup Thapa
 - Derek Zhou
 
----
-
-## Projects
+Projects
+------------
 
 - [Project 1](https://github.com/devanup/big-data-projects/tree/main/bd-project-1): City Inspection Data
 <!-- - [Project 2](https://github.com/devanup/big-data-projects/tree/project-2): Description of project 2.
