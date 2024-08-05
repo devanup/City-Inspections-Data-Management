@@ -1,10 +1,19 @@
-# Big Data Technology
+### Project: City Inspections Data Management
 
-This repository contains various projects related to big data processing, analysis, and management.
+#### Overview
+This project manages city inspection data using MongoDB. It involves reading data from a JSON file containing city inspections data, storing this data in a MongoDB database, and performing various operations on the data.
 
-## Overview
+#### Features
+- Load JSON data into MongoDB
+- Query and analyze city inspections data
+- Handle user inputs for business and zip-code searches
+- Generate random selections of businesses
 
-Each project is organized into its own directory within this repository. The main branch serves as an overview and entry point for the repository, providing information about the projects and how to navigate them.
+#### Contributors
+- Anup Thapa
+- Derek Zhou
+
+---
 
 ## Projects
 
